@@ -34,21 +34,17 @@ namespace ASP___Database.Pages.Test
             try
             {
                 String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=ASP_DB_TEST;Integrated Security=True";
-                using(SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    String sql = "INSERT INTO clients " + "(name, email, phone, address) VALUES " + "(@name, @email, @phone, @address);";
+				using SqlConnection connection = new SqlConnection(connectionString);
+				connection.Open();
+				String sql = "INSERT INTO clients " + "(name, email, phone, address) VALUES " + "(@name, @email, @phone, @address);";
 
-                    using(SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@name", clientInfo.name);
-                        command.Parameters.AddWithValue("@email", clientInfo.email);
-                        command.Parameters.AddWithValue("@phone", clientInfo.phone);
-                        command.Parameters.AddWithValue("@address", clientInfo.address);
+				using SqlCommand command = new SqlCommand(sql, connection);
+				command.Parameters.AddWithValue("@name", clientInfo.name);
+				command.Parameters.AddWithValue("@email", clientInfo.email);
+				command.Parameters.AddWithValue("@phone", clientInfo.phone);
+				command.Parameters.AddWithValue("@address", clientInfo.address);
 
-                        command.ExecuteNonQuery();
-                    }
-                }
+				command.ExecuteNonQuery();
 			}
             catch (Exception ex)
             {

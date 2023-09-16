@@ -17,28 +17,24 @@ namespace ASP___Database.Pages.Test
             try
             {
                 String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=ASP_DB_TEST;Integrated Security=True";
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    String sql = "SELECT * FROM clients WHERE id=@id";
+                using SqlConnection connection = new SqlConnection(connectionString);
+                
+                connection.Open();
+                String sql = "SELECT * FROM clients WHERE id=@id";
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("id", id);
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                clientInfo.id = reader.GetInt32(0).ToString();
-                                clientInfo.name = reader.GetString(1);
-                                clientInfo.email = reader.GetString(2);
-                                clientInfo.phone = reader.GetString(3);
-                                clientInfo.address = reader.GetString(4);
-                            }
-                        }
-                    }
-                }
-            }
+				using SqlCommand command = new SqlCommand(sql, connection);
+				command.Parameters.AddWithValue("id", id);
+				using SqlDataReader reader = command.ExecuteReader();
+				if (reader.Read())
+				{
+					clientInfo.id = reader.GetInt32(0).ToString();
+					clientInfo.name = reader.GetString(1);
+					clientInfo.email = reader.GetString(2);
+					clientInfo.phone = reader.GetString(3);
+					clientInfo.address = reader.GetString(4);
+				}
+
+			}
             catch (Exception ex)
             {
                 errorMessage = ex.Message;
@@ -64,25 +60,21 @@ namespace ASP___Database.Pages.Test
             try
             {
                 String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=ASP_DB_TEST;Integrated Security=True";
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    String sql = "UPDATE clients " +
-                        "SET name=@name, email=@email, phone=@phone, address=@address " +
-                        "WHERE id=@id";
+				using SqlConnection connection = new SqlConnection(connectionString);
+				connection.Open();
+				String sql = "UPDATE clients " +
+					"SET name=@name, email=@email, phone=@phone, address=@address " +
+					"WHERE id=@id";
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@name", clientInfo.name);
-                        command.Parameters.AddWithValue("@email", clientInfo.email);
-                        command.Parameters.AddWithValue("@phone", clientInfo.phone);
-                        command.Parameters.AddWithValue("@address", clientInfo.address);
-                        command.Parameters.AddWithValue("@id", clientInfo.id);
+                using SqlCommand command = new SqlCommand(sql, connection);
+					command.Parameters.AddWithValue("@name", clientInfo.name);
+					command.Parameters.AddWithValue("@email", clientInfo.email);
+					command.Parameters.AddWithValue("@phone", clientInfo.phone);
+					command.Parameters.AddWithValue("@address", clientInfo.address);
+					command.Parameters.AddWithValue("@id", clientInfo.id);
 
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
+					command.ExecuteNonQuery();
+			}
             catch (Exception ex)
             {
                 errorMessage = ex.Message;
